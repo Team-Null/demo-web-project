@@ -2,6 +2,10 @@ package edu.csupomona.cs480.controller;
 
 import java.util.List;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -145,6 +149,18 @@ public class WebController {
 	String kyleHubbard() {
 
 		return "New HTTP Get Request: Kyle Hubbard from Team NULL";
+	}
+
+	// Returns unformatted GET request to Twitch API
+	@RequestMapping(value = "/cs480/TeamNULL/KyleHubbard/Unirest", method = RequestMethod.GET)
+	String kyleHubbardHttpClient() throws UnirestException {
+		String clientID = "yxkhooad1bbvkjb13ibi0hcv4hhlcu";
+
+		HttpResponse<JsonNode> jsonResponse = Unirest.get("https://api.twitch.tv/helix/games/top")
+  			.header("Client-ID", clientID)
+			.asJson();
+
+		return jsonResponse.getBody().getObject().get("data").toString();
 	}
 	
 	@RequestMapping(value = "/cs480/TeamNULL/CarlosHernandez", method = RequestMethod.GET)
