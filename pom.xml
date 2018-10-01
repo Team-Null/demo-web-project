@@ -92,7 +92,19 @@
 			<artifactId>json</artifactId>
 			<version>20140107</version>
 		</dependency>
+	
+		<!-- Math Commons dependencies - Carlos Hernandez -->
+		<dependency>
+    		<groupId>org.apache.commons</groupId>
+    		<artifactId>commons-math3</artifactId>
+    		<version>3.6.1</version>
+		</dependency>
+	
 	</dependencies>
+
+	
+
+
 
 	<reporting>
 	  <plugins>

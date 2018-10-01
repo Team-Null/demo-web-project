@@ -6,6 +6,13 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+
+import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.linear.RealVector;
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
+import org.apache.commons.math3.linear.DecompositionSolver;
+import org.apache.commons.math3.linear.LUDecomposition;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -165,7 +172,21 @@ public class WebController {
 	
 	@RequestMapping(value = "/cs480/TeamNULL/CarlosHernandez", method = RequestMethod.GET)
 	String showName() {
+
 		return "Carlos Hernandez - CS4800 - 01";
+	}
+	@RequestMapping(value = "/cs480/TeamNULL/CarlosHernandez/CommonsMath", method = RequestMethod.GET) 
+	RealVector matrixLU(RealMatrix A, RealVector B)	{
+		DecompositionSolver solution = new LUDecomposition(A).getSolver();
+		return solution.solve(B);
+	}
+	void stats(int[] array) {
+		DescriptiveStatistics stats = new DescriptiveStatistics();
+		for(double i : array)
+			stats.addValue(i);
+		System.out.println(stats.getMean());
+		System.out.println(stats.getPercentile(50));
+		System.out.println(stats.getStandardDeviation());
 	}
 
 	@RequestMapping(value = "/cs480/TeamNULL/AronHubbard", method = RequestMethod.GET)
