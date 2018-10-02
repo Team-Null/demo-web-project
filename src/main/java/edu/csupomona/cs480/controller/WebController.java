@@ -1,5 +1,6 @@
 package edu.csupomona.cs480.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
@@ -14,6 +15,9 @@ import org.apache.commons.math3.linear.RealVector;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.commons.math3.linear.DecompositionSolver;
 import org.apache.commons.math3.linear.LUDecomposition;
+
+import org.apache.commons.io.LineIterator;
+import org.apache.commons.io.FileUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -224,5 +228,18 @@ public class WebController {
 	String myStringYK() {
 		return "Yujin Kwon ";
 	}
-	
+	@RequestMapping(value = "/cs480/TeamNULL/YujinKwon/CommonsIO", method= RequestMethod.GET)
+	void findText(File file, String search) throws IOException {
+		 LineIterator it = FileUtils.lineIterator(file, "UTF-8");
+		 try {
+		   while (it.hasNext()) {
+		     String line = it.nextLine();
+		     if(line.contains("search")) {
+		    	 System.out.println("Name found!");
+		     }
+		   }
+		 } finally {
+		   LineIterator.closeQuietly(it);
+		 }
+	}
 }
