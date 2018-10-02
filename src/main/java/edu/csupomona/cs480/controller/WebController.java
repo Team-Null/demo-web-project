@@ -1,5 +1,6 @@
 package edu.csupomona.cs480.controller;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.mashape.unirest.http.HttpResponse;
@@ -158,7 +159,7 @@ public class WebController {
 		return "New HTTP Get Request: Kyle Hubbard from Team NULL";
 	}
 
-	// Returns unformatted GET request to Twitch API
+	// Returns the Top 15 games being broadcast on Twitch as of the current time
 	@RequestMapping(value = "/cs480/TeamNULL/KyleHubbard/Unirest", method = RequestMethod.GET)
 	String kyleHubbardHttpClient() throws UnirestException {
 		String clientID = "yxkhooad1bbvkjb13ibi0hcv4hhlcu";
@@ -167,7 +168,15 @@ public class WebController {
   			.header("Client-ID", clientID)
 			.asJson();
 
-		return jsonResponse.getBody().getObject().get("data").toString();
+		String result = "";
+		for(int i = 0; i < 15; i++) {
+			result += (i + 1) + ": " + jsonResponse.getBody().getObject().getJSONArray("data").getJSONObject(i).get("name").toString() + "\n";
+		}
+
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		System.out.println("Twitch Top 15 Games as of " + timestamp + "\n" + result);
+
+		return "See Console for output.";
 	}
 	
 	@RequestMapping(value = "/cs480/TeamNULL/CarlosHernandez", method = RequestMethod.GET)
