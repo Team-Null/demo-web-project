@@ -1,5 +1,6 @@
 package edu.csupomona.cs480.controller;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -14,6 +15,10 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.commons.math3.linear.DecompositionSolver;
 import org.apache.commons.math3.linear.LUDecomposition;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -201,6 +206,19 @@ public class WebController {
 	@RequestMapping(value = "/cs480/TeamNULL/AronHubbard", method = RequestMethod.GET)
 	String aronHubbard() {
 		return "Aron Hubbard - Team NULL";
+	}
+
+	@RequestMapping(value = "/cs480/TeamNULL/AronHubbard/JSoup", method = RequestMethod.GET)
+	String getImages() throws IOException {
+			Document doc;
+			//get all images
+			doc = Jsoup.connect("https://www.reddit.com/r/PixelArt/").get();
+			Elements images = doc.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
+			for (Element image : images) {
+				System.out.println("\nsrc : " + image.attr("src"));
+			}
+		return "See Console for Image links and click any of the links that DON'T have 'renderTimingPixel.png' at the end to see an actual picture because I don't know how to filter the garbage out yet ¯\\_(ツ)_/¯";
+
 	}
 	@RequestMapping(value = "/cs480/TeamNULL/YujinKwon", method = RequestMethod.GET)
 	String myStringYK() {
